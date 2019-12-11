@@ -1,0 +1,15 @@
+{
+  "name": "gate-keeper",
+  "version": "0.0.1",
+  "description": "Authentication and Authorization module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Aman Aryan",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "js-cookie": "^2.2.1"
+  }
+}
