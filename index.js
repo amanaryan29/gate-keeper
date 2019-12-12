@@ -1,54 +1,45 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const config = {
-    baseURL: '',
-    loginURL: '',
-    cookieName: ''
-}
+class ApiWrapper {
+    constructor(config) {
+        this.baseURL = config.baseURL;
+        this.loginURL = config.loginURL;
+        this.cookie = config.cookie;
+        
 
-function onError() {
-    window.location = config.loginURL;
-}
+        const getCookie = key => Cookies.get(key);
+        const Authorization = getCookie(this.cookie);
+        let headers = {};
 
-const getCookie = key => Cookies.get(key);
-const Authorization = getCookie(config.cookieName);
-let headers = {};
-
-if (Authorization) {
-    headers.Authorization = Authorization;
-} else {
-    onError()
-}
-
-
-const apiClient = axios.create({
-    baseURL: config.baseURL,
-    timeout: 10000,
-    headers
-});
-
-
-apiClient.interceptors.response.use(
-    response => {
-        return response.data;
-    },
-    error => {
-        if (error.response.status > 400) {
-            onError();
+        if (Authorization) {
+            headers.Authorization = Authorization;
         } else {
-            return error;
+            this.onError()
         }
+
+        this.apiClient = axios.create({
+            baseURL: this.baseURL,
+            timeout: 10000,
+            headers
+        })
+
+        this.apiClient.interceptors.response.use(
+            response => {
+                return response.data;
+            },
+            error => {
+                if (error.response.status > 400) {
+                    this.onError();
+                } else {
+                    return error;
+                }
+            }
+        );
     }
-);
-
-
-function setData(baseURL, loginURL, cookieName) {
-    config.baseURL = baseURL;
-    config.loginURL = loginURL;
-    config.cookieName = cookieName;
+    onError() {
+        window.location = this.loginURL;
+    }
 }
 
-apiClient.setData = setData
-
-export default apiClient
+export default ApiWrapper
