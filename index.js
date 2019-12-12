@@ -5,11 +5,11 @@ class ApiWrapper {
     constructor(config) {
         this.baseURL = config.baseURL;
         this.loginURL = config.loginURL;
-        this.cookie = config.cookie;
+        this.cookieName = config.cookieName;
         
 
         const getCookie = key => Cookies.get(key);
-        const Authorization = getCookie(this.cookie);
+        const Authorization = getCookie(this.cookieName);
         let headers = {};
 
         if (Authorization) {
