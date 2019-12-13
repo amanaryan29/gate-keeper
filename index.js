@@ -12,11 +12,8 @@ class ApiWrapper {
         const Authorization = getCookie(this.cookieName);
         let headers = {};
 
-        if (Authorization) {
+        if (Authorization) 
             headers.Authorization = Authorization;
-        } else {
-            this.onError()
-        }
 
         this.apiClient = axios.create({
             baseURL: this.baseURL,
