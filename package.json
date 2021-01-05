@@ -9,7 +9,7 @@
   "author": "Aman Aryan",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "js-cookie": "^2.2.1"
   }
 }
